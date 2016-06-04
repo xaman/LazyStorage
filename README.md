@@ -2,9 +2,9 @@
 A simple way to persist objects in Android without knowing anything about databases.
 
 ## Why?
-There are a lot of ORM and database libraries to help you add data persistence to your app, but sometimes you don't need a lot of tables and relationships. In some cases you just need to save a few objects to let your users use your app offline.
+There are a lot of ORM and database libraries to help you add data persistence into your app, but sometimes you don't need a lot of tables and relationships. In some cases you just need to save a few objects to let your users use your app offline.
 
-I tried Realm, ORLite and SugarORM, and they are cool libraries, but there are some things I dislike:
+I tried Realm, ORLite and SugarORM. They are cool libraries, but there are some things I dislike:
 
 * Modify my data model classes to extend a **DB record superclass**.
 * Add unnecessary annotations like **@Table**, **@PrimaryKey**, **@Unique**, etc.
@@ -83,7 +83,18 @@ lazy.invalidate();
 
 ## Maven
 
-Coming soon...
+Add this to the *build.gradle* file of your *app* module:
 
+~~~
+repositories {
+    maven {
+        url 'https://dl.bintray.com/martin-chamarro/maven/'
+    }
+}
 
-### Please, let my know if you use it in your project!
+dependencies {
+    compile 'com.martinchamarro.lazystorage:lazystorage:1.0'
+}
+~~~
+
+####jCenter, coming soon...
