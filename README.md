@@ -83,18 +83,9 @@ lazy.invalidate();
 
 ## Maven
 
-Add this to the *build.gradle* file of your *app* module:
-
+The library is in *JCenter*. You just need to add this dependency:
 ~~~
-repositories {
-    maven {
-        url 'https://dl.bintray.com/martin-chamarro/maven/'
-    }
-}
-
-dependencies {
-    compile 'com.martinchamarro.lazystorage:lazystorage:1.0'
-}
+compile 'com.martinchamarro.lazystorage:lazystorage:1.0'
 ~~~
 
-####jCenter, coming soon...
+####Please, let me know if you use LazyStorage!!! ;D
