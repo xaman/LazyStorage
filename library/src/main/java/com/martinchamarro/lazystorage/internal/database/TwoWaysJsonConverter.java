@@ -21,9 +21,11 @@ final class TwoWaysJsonConverter {
     }
 
     public <T> T convert(String json, Class<T> classOfT) throws LazyStorageException {
-        T object = gson.fromJson(json, classOfT);
-        if (object == null) throw new JsonConversionException("Exception trying to convert JSON to object.");
-        return object;
+        try {
+            return gson.fromJson(json, classOfT);
+        } catch (Exception e) {
+            throw new JsonConversionException("Exception trying to convert Json to object.", e);
+        }
     }
 
 }
