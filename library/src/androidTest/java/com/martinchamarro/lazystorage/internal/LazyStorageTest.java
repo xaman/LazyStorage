@@ -45,6 +45,13 @@ public class LazyStorageTest {
         assertEquals(source, result);
     }
 
+    @Test public void testSaveWithGivenIdAndLoad() {
+        Object source = givenOneObject();
+        lazy.save(ANY_INT_ID, source);
+        Object result = lazy.load(ANY_INT_ID, source.getClass());
+        assertEquals(source, result);
+    }
+
     @Test public void testInsertLoadAndDelete() {
         Object source = givenOneObject();
         lazy.save(source);

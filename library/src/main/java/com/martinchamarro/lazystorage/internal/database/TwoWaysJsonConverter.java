@@ -16,7 +16,7 @@ final class TwoWaysJsonConverter {
         try {
             return gson.toJson(object);
         } catch (Exception e) {
-            throw new JsonConversionException("It's not possible to convert the object to Json.", e);
+            throw new JsonConversionException("It's not possible to convert the object to Json", e);
         }
     }
 
@@ -24,7 +24,7 @@ final class TwoWaysJsonConverter {
         try {
             return gson.fromJson(json, classOfT);
         } catch (Exception e) {
-            throw new JsonConversionException("Exception trying to convert Json to object.", e);
+            throw new JsonConversionException("Exception trying to convert Json to object", e);
         }
     }
 

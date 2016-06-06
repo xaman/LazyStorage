@@ -8,6 +8,8 @@ public interface Database {
 
     void save(Object object) throws LazyStorageException;
 
+    void save(Object id, Object object) throws LazyStorageException;
+
     <T> void saveAll(List<T> objects) throws LazyStorageException;
 
     <T> T load(Object id, Class<T> classOfT) throws LazyStorageException;

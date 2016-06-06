@@ -19,12 +19,19 @@ public final class LazyStorage {
         database = new DatabaseImpl(context);
     }
 
-
     public void save(Object object) {
         try {
             database.save(object);
         } catch (LazyStorageException e) {
-            Logger.e(TAG, "Exception saving object.", e);
+            Logger.e(TAG, "Exception saving object", e);
+        }
+    }
+
+    public void save(Object id, Object object) {
+        try {
+            database.save(object);
+        } catch (LazyStorageException e) {
+            Logger.e(TAG, "Exception saving object with id=" + id, e);
         }
     }
 
@@ -32,7 +39,7 @@ public final class LazyStorage {
         try {
             database.saveAll(objects);
         } catch (LazyStorageException e) {
-            Logger.e(TAG, "Exception saving objects.", e);
+            Logger.e(TAG, "Exception saving objects", e);
         }
     }
 
