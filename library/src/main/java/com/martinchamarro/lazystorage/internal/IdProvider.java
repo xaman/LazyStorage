@@ -2,7 +2,7 @@ package com.martinchamarro.lazystorage.internal;
 
 import com.martinchamarro.lazystorage.annotation.Id;
 import com.martinchamarro.lazystorage.internal.exception.ObjectIdNotFoundException;
-import com.martinchamarro.lazystorage.internal.providers.*;
+import com.martinchamarro.lazystorage.internal.getter.*;
 
 import java.util.ArrayList;
 import java.util.List;
