@@ -79,6 +79,14 @@ public final class LazyStorage {
         }
     }
 
+    public <T> void deleteAll(List<T> objects) {
+        try {
+            database.deleteAll(objects);
+        } catch (LazyStorageException e) {
+            Logger.e(TAG, e);
+        }
+    }
+
     public void invalidate() {
         try {
             database.invalidate();

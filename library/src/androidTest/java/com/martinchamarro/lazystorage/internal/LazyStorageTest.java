@@ -96,12 +96,22 @@ public class LazyStorageTest {
         assertEquals(source, result);
     }
 
-    @Test @MediumTest public void testSaveAllAndDelete() {
+    @Test @MediumTest public void testSaveAllAndDeleteByClass() {
         List<Car> source = givenAList(10);
         lazy.saveAll(source);
         List<Car> result = lazy.loadAll(Car.class);
         assertEquals(source, result);
         lazy.deleteAll(Car.class);
+        List<Car> loadAfterDelete = lazy.loadAll(Car.class);
+        assertTrue(loadAfterDelete.isEmpty());
+    }
+
+    @Test @MediumTest public void testSaveAllAndDeleteList() {
+        List<Car> source = givenAList(10);
+        lazy.saveAll(source);
+        List<Car> result = lazy.loadAll(Car.class);
+        assertEquals(source, result);
+        lazy.deleteAll(source);
         List<Car> loadAfterDelete = lazy.loadAll(Car.class);
         assertTrue(loadAfterDelete.isEmpty());
     }

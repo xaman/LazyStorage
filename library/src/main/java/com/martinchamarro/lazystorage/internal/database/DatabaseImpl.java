@@ -120,6 +120,20 @@ public final class DatabaseImpl extends SQLiteOpenHelper implements Database {
         }
     }
 
+    @Override public <T> void deleteAll(List<T> objects) throws LazyStorageException {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            for(Object object : objects) {
+                db.delete(ObjectsTable.NAME, WHERE_ID_AND_CLASS, idAndClassToArray(getId(object), object.getClass()));
+            }
+            db.setTransactionSuccessful();
+        } catch (SQLiteException e) {
+            throw new DatabaseException("Database exception deleting list of objects", e);
+        }
+        db.endTransaction();
+    }
+
     @Override public void invalidate() throws LazyStorageException {
         try {
             SQLiteDatabase db = getWritableDatabase();

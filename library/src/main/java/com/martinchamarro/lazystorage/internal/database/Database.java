@@ -20,6 +20,8 @@ public interface Database {
 
     <T> void deleteAll(Class<T> classOfT) throws LazyStorageException;
 
+    <T> void deleteAll(List<T> objects) throws LazyStorageException;
+
     void invalidate() throws LazyStorageException;
 
 }
