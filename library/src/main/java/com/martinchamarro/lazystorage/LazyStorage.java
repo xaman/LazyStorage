@@ -23,15 +23,15 @@ public final class LazyStorage {
         try {
             database.save(object);
         } catch (LazyStorageException e) {
-            Logger.e(TAG, "Exception saving object", e);
+            Logger.e(TAG, e);
         }
     }
 
     public void save(Object id, Object object) {
         try {
-            database.save(object);
+            database.save(id, object);
         } catch (LazyStorageException e) {
-            Logger.e(TAG, "Exception saving object with id=" + id, e);
+            Logger.e(TAG, e);
         }
     }
 
@@ -39,7 +39,7 @@ public final class LazyStorage {
         try {
             database.saveAll(objects);
         } catch (LazyStorageException e) {
-            Logger.e(TAG, "Exception saving objects", e);
+            Logger.e(TAG, e);
         }
     }
 
@@ -48,7 +48,7 @@ public final class LazyStorage {
         try {
             result = database.load(id, classOfT);
         } catch (LazyStorageException e) {
-            Logger.e(TAG, "Exception loading object with id=" + id + " and class=" + classOfT, e);
+            Logger.e(TAG, e);
         }
         return result;
     }
@@ -58,20 +58,32 @@ public final class LazyStorage {
         try {
             result = database.loadAll(classOfT);
         } catch (LazyStorageException e) {
-            Logger.e(TAG, "Exception trying to load all objects with class=" + classOfT, e);
+            Logger.e(TAG, e);
         }
         return result;
     }
 
     public <T> void delete(Object id, Class<T> classOfT) {
-        database.delete(id, classOfT);
+        try {
+            database.delete(id, classOfT);
+        } catch (LazyStorageException e) {
+            Logger.e(TAG, e);
+        }
     }
 
     public <T> void deleteAll(Class<T> classOfT) {
-        database.deleteAll(classOfT);
+        try {
+            database.deleteAll(classOfT);
+        } catch (LazyStorageException e) {
+            Logger.e(TAG, e);
+        }
     }
 
     public void invalidate() {
-        database.invalidate();
+        try {
+            database.invalidate();
+        } catch (LazyStorageException e) {
+            Logger.e(TAG, e);
+        }
     }
 }

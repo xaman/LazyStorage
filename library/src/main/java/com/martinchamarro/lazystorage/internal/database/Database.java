@@ -16,10 +16,10 @@ public interface Database {
 
     <T> List<T> loadAll(Class<T> classOfT) throws LazyStorageException;
 
-    <T> void delete(Object id, Class<T> classOfT);
+    <T> void delete(Object id, Class<T> classOfT) throws LazyStorageException;
 
-    <T> void deleteAll(Class<T> classOfT);
+    <T> void deleteAll(Class<T> classOfT) throws LazyStorageException;
 
-    void invalidate();
+    void invalidate() throws LazyStorageException;
 
 }

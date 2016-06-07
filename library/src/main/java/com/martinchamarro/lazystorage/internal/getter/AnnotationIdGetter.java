@@ -24,7 +24,7 @@ public final class AnnotationIdGetter implements IdGetter {
                 }
             }
         } catch (IllegalAccessException e) {
-            Logger.e(TAG, "Exception trying to get object id from " + classOfAnnotation.getSimpleName() + " annotation", e);
+            Logger.e(TAG, "Exception getting object id from @" + classOfAnnotation.getSimpleName() + " annotation", e);
         }
         return id;
     }

@@ -24,6 +24,10 @@ public final class Logger {
         Log.e("[" + tag + "][E] ", message);
     }
 
+    public static void e(String tag, Throwable throwable) {
+        Log.e("[" + tag + "][E] ", Log.getStackTraceString(throwable));
+    }
+
     public static void e(String tag, String message, Throwable throwable) {
         Log.e("[" + tag + "][E] ", message, throwable);
     }

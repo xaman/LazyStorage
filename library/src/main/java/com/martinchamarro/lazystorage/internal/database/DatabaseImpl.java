@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.martinchamarro.lazystorage.internal.IdProvider;
+import com.martinchamarro.lazystorage.internal.exception.DatabaseException;
 import com.martinchamarro.lazystorage.internal.exception.LazyStorageException;
 import com.martinchamarro.lazystorage.internal.exception.ObjectIdNotFoundException;
 
@@ -47,8 +48,12 @@ public final class DatabaseImpl extends SQLiteOpenHelper implements Database {
     }
 
     @Override public void save(Object id, Object object) throws LazyStorageException {
-        SQLiteDatabase db = getWritableDatabase();
-        db.insertWithOnConflict(ObjectsTable.NAME, null, values(id, object), ON_CONFLICT);
+        try {
+            SQLiteDatabase db = getWritableDatabase();
+            db.insertWithOnConflict(ObjectsTable.NAME, null, values(id, object), ON_CONFLICT);
+        } catch (SQLiteException e) {
+            throw new DatabaseException("Database exception saving object with id=" + id, e);
+        }
     }
 
     @Override public <T> void saveAll(List<T> objects) throws LazyStorageException {
@@ -60,7 +65,7 @@ public final class DatabaseImpl extends SQLiteOpenHelper implements Database {
             }
             db.setTransactionSuccessful();
         } catch (SQLiteException e) {
-            throw new LazyStorageException("Exception trying to save objects", e);
+            throw new DatabaseException("Database exception saving list of objects", e);
         }
         db.endTransaction();
     }
@@ -70,38 +75,58 @@ public final class DatabaseImpl extends SQLiteOpenHelper implements Database {
     }
 
     @Override public <T> T load(Object id, Class<T> classOfT) throws LazyStorageException {
-        T result = null;
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(ObjectsTable.NAME, null, WHERE_ID_AND_CLASS, idAndClassToArray(id, classOfT), null, null, null);
-        if (cursor.moveToFirst()) {
-            result = object(cursor, classOfT);
+        try {
+            T result = null;
+            SQLiteDatabase db = getReadableDatabase();
+            Cursor cursor = db.query(ObjectsTable.NAME, null, WHERE_ID_AND_CLASS, idAndClassToArray(id, classOfT), null, null, null);
+            if (cursor.moveToFirst()) {
+                result = object(cursor, classOfT);
+            }
+            return result;
+        } catch (SQLiteException e) {
+            throw new DatabaseException("Database exception loading object with id=" + id + " and class=" + classOfT, e);
         }
-        return result;
     }
 
     @Override public <T> List<T> loadAll(Class<T> classOfT) throws LazyStorageException {
-        List<T> result = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(ObjectsTable.NAME, null, WHERE_CLASS, classToArray(classOfT), null, null, null);
-        while(cursor.moveToNext()) {
-            result.add(object(cursor, classOfT));
+        try {
+            List<T> result = new ArrayList<>();
+            SQLiteDatabase db = getReadableDatabase();
+            Cursor cursor = db.query(ObjectsTable.NAME, null, WHERE_CLASS, classToArray(classOfT), null, null, null);
+            while (cursor.moveToNext()) {
+                result.add(object(cursor, classOfT));
+            }
+            return result;
+        } catch (SQLiteException e) {
+            throw new DatabaseException("Database exception loading all objects with class=" + classOfT, e);
         }
-        return result;
     }
 
-    @Override public <T> void delete(Object id, Class<T> classOfT) {
-        SQLiteDatabase db = getWritableDatabase();
-        db.delete(ObjectsTable.NAME, WHERE_ID_AND_CLASS, idAndClassToArray(id, classOfT));
+    @Override public <T> void delete(Object id, Class<T> classOfT) throws LazyStorageException {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
+            db.delete(ObjectsTable.NAME, WHERE_ID_AND_CLASS, idAndClassToArray(id, classOfT));
+        } catch (SQLiteException e) {
+            throw new DatabaseException("Database exception deleting object with id=" + id, e);
+        }
     }
 
-    @Override public <T> void deleteAll(Class<T> classOfT) {
-        SQLiteDatabase db = getWritableDatabase();
-        db.delete(ObjectsTable.NAME, WHERE_CLASS, classToArray(classOfT));
+    @Override public <T> void deleteAll(Class<T> classOfT) throws LazyStorageException {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
+            db.delete(ObjectsTable.NAME, WHERE_CLASS, classToArray(classOfT));
+        } catch (SQLiteException e) {
+            throw new DatabaseException("Database exception deleting objects of class=" + classOfT, e);
+        }
     }
 
-    @Override public void invalidate() {
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL(ObjectsTable.INVALIDATE);
+    @Override public void invalidate() throws LazyStorageException {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
+            db.execSQL(ObjectsTable.INVALIDATE);
+        } catch (SQLiteException e) {
+            throw new DatabaseException("Database exception invalidating", e);
+        }
     }
 
     private String getId(Object object) throws ObjectIdNotFoundException {

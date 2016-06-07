@@ -26,7 +26,7 @@ public final class IdProvider {
 
     public String getId(Object object) throws ObjectIdNotFoundException {
         Object id = getIdFromGetters(object);
-        if (id == null) throw new ObjectIdNotFoundException("The object does not have id, mId, getId() or @Id annotated field");
+        if (id == null) throw new ObjectIdNotFoundException("The object doesn't have id, mId, getId() or @Id annotated field");
         return String.valueOf(id);
     }
 
