@@ -94,4 +94,8 @@ public final class LazyStorage {
             Logger.e(TAG, e);
         }
     }
+
+    public void enableLogging() {
+        Logger.enable();
+    }
 }
