@@ -6,6 +6,10 @@ public class LazyStorageException extends Exception {
         super();
     }
 
+    public LazyStorageException(Throwable cause) {
+        super(cause);
+    }
+
     public LazyStorageException(String detailMessage) {
         super(detailMessage);
     }

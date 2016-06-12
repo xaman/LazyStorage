@@ -4,27 +4,39 @@ import android.util.Log;
 
 public final class Logger {
 
+    private static final String TAG = "LazyStorage";
+
+    private static boolean enabled = false;
+
     private Logger() {
         // Empty
     }
 
     public static void d(String tag, String message) {
-        Log.d("[" + tag + "][D] ", message);
+        if (enabled) Log.d(TAG, "[" + tag + "] - " + message);
     }
 
     public static void w(String tag, String message) {
-        Log.w("[" + tag + "][W] ", message);
+        if (enabled) Log.w(TAG, "[" + tag + "] - " + message);
     }
 
     public static void w(String tag, String message, Throwable throwable) {
-        Log.w("[" + tag + "][W] ", message, throwable);
+        if (enabled) Log.w(TAG, "[" + tag + "] - " + message + " - " + throwable.getMessage());
     }
 
     public static void e(String tag, String message) {
-        Log.e("[" + tag + "][E] ", message);
+        if (enabled) Log.e(TAG, "[" + tag + "] - " + message);
+    }
+
+    public static void e(String tag, Throwable throwable) {
+        if (enabled) Log.e(TAG, "[" + tag + "] - " + throwable.getMessage());
     }
 
     public static void e(String tag, String message, Throwable throwable) {
-        Log.e("[" + tag + "][E] ", message, throwable);
+        if (enabled) Log.e(TAG, "[" + tag + "] - " + message + " - " + throwable.getMessage());
+    }
+
+    public static void enable() {
+        enabled = true;
     }
 }

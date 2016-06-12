@@ -1,4 +1,4 @@
-package com.martinchamarro.lazystorage.internal.providers;
+package com.martinchamarro.lazystorage.internal.getter;
 
 import android.support.test.runner.AndroidJUnit4;
 

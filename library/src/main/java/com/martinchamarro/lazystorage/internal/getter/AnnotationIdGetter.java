@@ -1,4 +1,4 @@
-package com.martinchamarro.lazystorage.internal.providers;
+package com.martinchamarro.lazystorage.internal.getter;
 
 import com.martinchamarro.lazystorage.utils.Logger;
 
@@ -24,7 +24,7 @@ public final class AnnotationIdGetter implements IdGetter {
                 }
             }
         } catch (IllegalAccessException e) {
-            Logger.e(TAG, "Exception trying to get object id from " + classOfAnnotation.getSimpleName() + " annotation", e);
+            Logger.e(TAG, "Exception getting object id from @" + classOfAnnotation.getSimpleName() + " annotation", e);
         }
         return id;
     }

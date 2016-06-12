@@ -8,16 +8,20 @@ public interface Database {
 
     void save(Object object) throws LazyStorageException;
 
+    void save(Object id, Object object) throws LazyStorageException;
+
     <T> void saveAll(List<T> objects) throws LazyStorageException;
 
     <T> T load(Object id, Class<T> classOfT) throws LazyStorageException;
 
     <T> List<T> loadAll(Class<T> classOfT) throws LazyStorageException;
 
-    <T> void delete(Object id, Class<T> classOfT);
+    <T> void delete(Object id, Class<T> classOfT) throws LazyStorageException;
 
-    <T> void deleteAll(Class<T> classOfT);
+    <T> void deleteAll(Class<T> classOfT) throws LazyStorageException;
 
-    void invalidate();
+    <T> void deleteAll(List<T> objects) throws LazyStorageException;
+
+    void invalidate() throws LazyStorageException;
 
 }

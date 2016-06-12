@@ -2,7 +2,7 @@ package com.martinchamarro.lazystorage.internal;
 
 import com.martinchamarro.lazystorage.annotation.Id;
 import com.martinchamarro.lazystorage.internal.exception.ObjectIdNotFoundException;
-import com.martinchamarro.lazystorage.internal.providers.*;
+import com.martinchamarro.lazystorage.internal.getter.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public final class IdProvider {
 
     public String getId(Object object) throws ObjectIdNotFoundException {
         Object id = getIdFromGetters(object);
-        if (id == null) throw new ObjectIdNotFoundException("The object does not have id, mId, getId() or @Id annotated field.");
+        if (id == null) throw new ObjectIdNotFoundException("The object doesn't have id, mId, getId() or @Id annotated field");
         return String.valueOf(id);
     }
 
