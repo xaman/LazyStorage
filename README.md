@@ -1,4 +1,7 @@
 # LazyStorage
+
+[![jcenter](https://img.shields.io/badge/jcenter-1.1.0-green.svg)](https://bintray.com/martin-chamarro/maven/lazystorage/)
+
 A simple way to persist objects in Android without knowing anything about databases.
 
 ## Why?
@@ -11,13 +14,13 @@ I tried Realm, ORLite and SugarORM. They are cool libraries, but there are some 
 * Some complex solutions to persist **1-1** and **1-N** relationships.
 
 ## What?
-I coded a simple library to help you store objects modifying your project as less as possible. LazyStorage obtains an id by reflection:
+I coded a simple library to help you store objects by modifying your project as less as possible. 
 
-* Invoking a **getId()** method.
-* Looking for an **id** or **mId** field.
-* Looking for a field annotated with **@Id** (Have I said I don't like to add extra annotations to my data model?). Maybe you don't have ids, perhaps you have *username*, *passport*, or other unique field.
+The library uses **SQLite** to store the objects. There is just one table that saves the object *id*, its *class* and its *value*. The objects are serialized with **Gson**. You can provide an id, or you can let the library retrieve one by reflection. By default, the library tries to invoke a **getId()** method and searchs for **id** and **mId** fields.
 
-It saves that id and the value of the object (serialized with **Gson**).
+There is a **@Id** annotation (Did I say I don't like to add extra annotations to my data model?) too. Optionally, you can use this annotation to indicate which is the field of your class that identifies the object.
+
+Everything works synchronously, so it's not a good idea to use the library from the main thread of your Android app. I use it as DataSource combined with a RepositoryPattern.
 
 
 ##TL;DR;
@@ -84,8 +87,9 @@ lazy.invalidate();
 ## Maven
 
 The library is in *JCenter*. You just need to add this dependency:
+
 ~~~
-compile 'com.martinchamarro.lazystorage:lazystorage:1.0'
+compile 'com.martinchamarro.lazystorage:lazystorage:1.1.0'
 ~~~
 
 ####Please, let me know if you use LazyStorage!!! ;D
